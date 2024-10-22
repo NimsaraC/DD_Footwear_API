@@ -1,0 +1,6 @@
+@DD_Footwear_HostAddress = http://localhost:5250
+
+GET {{DD_Footwear_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
