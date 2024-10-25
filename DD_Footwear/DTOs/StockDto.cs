@@ -21,7 +21,7 @@ namespace DD_Footwear.DTOs
         public int ProductId { get; set; }
         public int Stock { get; set; }
         public double StockPrice { get; set; }
-        public int StockId { get; set; }
+        //public int StockId { get; set; }
     }
 
 }

@@ -40,7 +40,7 @@ namespace DD_Footwear.Services
             
             var stockItem = new StockItems
             {
-                StockId = addStock.StockId,
+                StockId = stock.Id,
                 ProductId = addStock.ProductId,
                 Stock = addStock.Stock,
                 StockPrice = addStock.StockPrice,
