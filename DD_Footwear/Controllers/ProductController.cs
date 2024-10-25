@@ -34,7 +34,7 @@ namespace DD_Footwear.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct([FromBody] ProductDto productDto)
+        public async Task<IActionResult> AddProduct([FromBody] ProductCreateDto productDto)
         {
             var newProduct = await _productService.AddProductAsync(productDto);
             return CreatedAtAction(nameof(GetProductById), new { id = newProduct.ProductId }, newProduct);

@@ -29,9 +29,18 @@ namespace DD_Footwear.Services
             return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<ProductDto> AddProductAsync(ProductDto productDto)
+        public async Task<ProductDto> AddProductAsync(ProductCreateDto productDto)
         {
-            var product = _mapper.Map<Product>(productDto);
+            var product = new Product
+            {
+                Categorie = productDto.Categorie,
+                Description = productDto.Description,
+                Lock = 0,
+                Name = productDto.Name,
+                Unlock = 0,
+                Price = productDto.Price,
+                StockLevel = productDto.StockLevel,
+            };
             var addedProduct = await _productRepository.AddAsync(product);
             return _mapper.Map<ProductDto>(addedProduct);
         }
@@ -60,7 +69,7 @@ namespace DD_Footwear.Services
     {
         Task<IEnumerable<ProductDto>> GetAllProductsAsync();
         Task<ProductDto> GetProductByIdAsync(int productId);
-        Task<ProductDto> AddProductAsync(ProductDto productDto);
+        Task<ProductDto> AddProductAsync(ProductCreateDto productDto);
         Task UpdateProductAsync(int productId, ProductCreateDto productDto);
         Task<bool> DeleteProductAsync(int productId);
     }

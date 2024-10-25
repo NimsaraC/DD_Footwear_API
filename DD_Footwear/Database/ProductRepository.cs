@@ -25,6 +25,7 @@ namespace DD_Footwear.Database
 
         public async Task<Product> AddAsync(Product product)
         {
+            product.Unlock = product.StockLevel;
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
             return product;
@@ -41,6 +42,8 @@ namespace DD_Footwear.Database
                 existingProduct.Description = product.Description;
                 existingProduct.Categorie = product.Categorie;
                 existingProduct.StockLevel = product.StockLevel;
+                existingProduct.Lock = existingProduct.Lock;
+                existingProduct.Unlock = existingProduct.Unlock;
             }
             _context.Products.Update(existingProduct);
             await _context.SaveChangesAsync();

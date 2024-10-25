@@ -1,4 +1,5 @@
 using DD_Footwear.Database;
+using DD_Footwear.Profiles;
 using DD_Footwear.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,8 +19,12 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IStockRepository, StockRepository>();
 builder.Services.AddScoped<IStockService, StockService>();
 
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+
 builder.Services.AddAutoMapper(typeof(ProductProfile));
 builder.Services.AddAutoMapper(typeof(StockProfile));
+builder.Services.AddAutoMapper(typeof(OrderProfile));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
