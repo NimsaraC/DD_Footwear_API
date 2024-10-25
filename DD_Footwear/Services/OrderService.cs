@@ -8,11 +8,13 @@ namespace DD_Footwear.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly ICartRepository _cartRepository;
         private readonly IMapper _mapper;
 
-        public OrderService(IOrderRepository orderRepository, IMapper mapper)
+        public OrderService(IOrderRepository orderRepository,ICartRepository cartRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
+            _cartRepository = cartRepository;
             _mapper = mapper;
         }
 
@@ -24,6 +26,16 @@ namespace DD_Footwear.Services
 
         public async Task<OrderDto> CreateOrderAsync(CreateOrderDto createOrderDto)
         {
+            var cartItems = await _cartRepository.GetCartItemsByUserIdAsync(createOrderDto.UserID);
+            if (!cartItems.Any())
+            {
+                throw new InvalidOperationException("No items in cart.");
+            }
+            double Total = 0;
+            foreach (var item in cartItems)
+            {
+                Total += (item.Quantity * item.UnitPrice);
+            }
 
             var order = new Order
             {
@@ -34,10 +46,20 @@ namespace DD_Footwear.Services
                 AddressLine2 = createOrderDto.AddressLine2,
                 City = createOrderDto.City,
                 Region = createOrderDto.Region,
-                items = new List<OrderItem>()
+                TotalAmount = Total,
+                items = cartItems.Select(ci => new OrderItem
+                {
+                    ProductId = ci.ProductId,
+                    Quantity = ci.Quantity,
+                    UnitPrice = ci.UnitPrice,
+                    ImagePath = ci.ImagePath,
+
+                }).ToList()
             };
 
+            await _cartRepository.ClearCartAsync(createOrderDto.UserID);
             var createdOrder = await _orderRepository.AddAsync(order);
+
             return _mapper.Map<OrderDto>(createdOrder);
         }
 

@@ -9,6 +9,7 @@
         public int StockLevel { get; set; }
         public int Lock {  get; set; }
         public int Unlock { get; set; }
-        public String Categorie { get; set; }
+        public string Categorie { get; set; }
+        public string? ImagePath { get; set; }
     }
 }

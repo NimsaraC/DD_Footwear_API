@@ -45,6 +45,7 @@ namespace DD_Footwear.Database
                     if (stock.Unlock < item.Quantity)
                     {
                         order.OrderStatus = "PreOrderd";
+                        stock.Lock += item.Quantity;
                     }
                     else
                     {
