@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DD_Footwear.Migrations
 {
     [DbContext(typeof(DDShopDbContext))]
-    [Migration("20241025093637_initialCreate")]
+    [Migration("20241026082533_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -223,6 +223,35 @@ namespace DD_Footwear.Migrations
                     b.HasIndex("StockId");
 
                     b.ToTable("StockItems");
+                });
+
+            modelBuilder.Entity("DD_Footwear.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DD_Footwear.Models.CartItem", b =>
